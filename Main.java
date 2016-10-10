@@ -2,8 +2,9 @@
  * Created by Mirsiss on 2016-10-10.
  *
  * Graph generator for Algorithm problems
- * generates edge list of connected graph for output at file "graph"
+ * generates edge list of connected graph at file "graph"
  *  */
+
 import java.io.*;
 import java.util.*;
 
