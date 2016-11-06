@@ -23,7 +23,7 @@ public class Main {
         System.out.print("# of edges : ");
         int M = sc.nextInt();
         //output += N + " " + M + "\n";
-        System.out.print("max weight (1 for unweighted): ");
+        System.out.print("max weight (bigger than 1): ");
         int W = sc.nextInt();
 
         if(M < N-1) {
@@ -35,13 +35,19 @@ public class Main {
             System.exit(1);
         }
 
-        for(int i=0; i < N; i++) {
+        if(M > N * (N-1) / 2)
+            M = N * (N-1) / 2;
+
+        boolean[][] Adj = new boolean[N][N];
+
+        for(int i = 0; i < N; i++) {
             output += i + " ";
 
             while(true) {
                 int v = rand.nextInt(N);
-                if(v != i) {
+                if(v != i && !Adj[v][i] && !Adj[i][v]) {
                     output += v + " ";
+                    Adj[v][i] = Adj[i][v] = true;
                     break;
                 }
             }
@@ -53,14 +59,30 @@ public class Main {
 
         for(int i=0; i < M-N; i++) {
             int v1 = rand.nextInt(N);
-            int v2;
-
+            int v2 = rand.nextInt(N);;
+            int cnt = 0;
             while(true) {
-                v2 = rand.nextInt(N);
-                if(v1 != v2 && !output.contains(v2 + " " + v1))
+                if(v1 != v2 && !Adj[v1][v2] && !Adj[v2][v1])
                     break;
+                else if(cnt == N)
+                    break;
+                else if(v2 == 0) {
+                    v2 += N - 1;
+                    cnt++;
+                }
+                else {
+                    v2--;
+                    cnt++;
+                }
             }
-            output += v1 + " " + v2 + " " + (rand.nextInt(W-1) + 1) + "\n";
+            if(cnt != N) {
+                output += v1 + " " + v2 + " " + (rand.nextInt(W - 1) + 1) + "\n";
+                Adj[v1][v2] = Adj[v2][v1] = true;
+            }
+            else {
+                i--;
+                continue;
+            }
         }
         System.out.println(output);
         out.write(output);
