@@ -30,13 +30,12 @@ public class Main {
             System.out.println("# of edges must be equal or bigger than # of vertices - 1");
             System.exit(1);
         }
+        else if(M > N * (N-1) / 2)
+            M = N * (N-1) / 2;
         else if(W < 1) {
             System.out.println("max weight must be bigger than 0");
             System.exit(1);
         }
-
-        if(M > N * (N-1) / 2)
-            M = N * (N-1) / 2;
 
         boolean[][] Adj = new boolean[N][N];
 
@@ -61,6 +60,7 @@ public class Main {
             int v1 = rand.nextInt(N);
             int v2 = rand.nextInt(N);;
             int cnt = 0;
+
             while(true) {
                 if(v1 != v2 && !Adj[v1][v2] && !Adj[v2][v1])
                     break;
@@ -75,6 +75,7 @@ public class Main {
                     cnt++;
                 }
             }
+
             if(cnt != N) {
                 output += v1 + " " + v2 + " " + (rand.nextInt(W - 1) + 1) + "\n";
                 Adj[v1][v2] = Adj[v2][v1] = true;
